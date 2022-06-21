@@ -14,7 +14,7 @@ pipeline {
         
         stage ('Docker Image Build') {
             steps {
-                sh 'docker build Dockerfile -t  saigopi123456/tomcat:$BUILD_NUMBER .'
+                sh 'docker build -t  saigopi123456/tomcat:$BUILD_NUMBER .'
             }
         }
         stage ('DockerHub Login') {
