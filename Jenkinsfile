@@ -21,6 +21,11 @@ pipeline {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR  --password-stdin'
             }
-        }        
+        }
+        stage ('Docker Push') {
+            steps {
+                sh 'docker push saigopi123456/tomcat:$BUILD_NUMBER'
+            }
+        }       
     }
 }
