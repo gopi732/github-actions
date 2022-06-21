@@ -26,6 +26,11 @@ pipeline {
             steps {
                 sh 'docker push saigopi123456/tomcat:$BUILD_NUMBER'
             }
-        }       
+        }
+         stage ('Docker create container') {
+            steps {
+                sh 'docker run -d --name tomcatcontainer -p 8085:8080 saigopi123456/tomcat:$BUILD_NUMBER'
+            }
+        }      
     }
 }
