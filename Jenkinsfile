@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage ('Git Checkout') {
             steps {
-                git branch: 'feature1', credentialsId: 'github', url: 'https://github.com/gopi732/tomcat.git'
+                git branch: 'feature2', credentialsId: 'github', url: 'https://github.com/gopi732/tomcat.git'
             }
         }
         
@@ -27,7 +27,7 @@ pipeline {
                 sh 'docker push saigopi123456/tomcat:$BUILD_NUMBER'
             }
         }
-         stage ('Docker create container') {
+        stage ('Docker create container') {
             steps {
                 sh 'docker run -d --name tomcatcontainer -p 8085:8080 saigopi123456/tomcat:$BUILD_NUMBER'
             }
