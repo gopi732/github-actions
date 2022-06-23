@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage ('Git Checkout') {
             steps {
-                git branch: 'master', credentialsId: 'github', url: 'https://github.com/gopi732/tomcat.git'
+                git branch: 'feature1', credentialsId: 'github', url: 'https://github.com/gopi732/tomcat.git'
             }
         }
         
