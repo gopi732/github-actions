@@ -11,12 +11,6 @@ pipeline {
     }
 
     stages {
-        stage ('Git Checkout') {
-            steps {
-                git branch: 'feature2', credentialsId: 'github', url: 'https://github.com/gopi732/tomcat.git'
-            }
-        }
-        
         stage ('Docker Image Build') {
             steps {
                 sh 'docker build -t  $DOCKER_HUB_REPO:$BUILD_NUMBER .'
