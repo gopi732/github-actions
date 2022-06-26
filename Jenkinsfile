@@ -2,7 +2,12 @@ pipeline {
     agent any
     
     environment {
+        DOCKER_HUB_REPO = "saigopi123456/tomcat"
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        http_proxy = 'http://127.0.0.1:3128/'
+        https_proxy = 'http://127.0.0.1:3128/'
+        ftp_proxy = 'http://127.0.0.1:3128/'
+        socks_proxy = 'socks://127.0.0.1:3128/'
     }
 
     stages {
@@ -14,7 +19,7 @@ pipeline {
         
         stage ('Docker Image Build') {
             steps {
-                sh 'docker build -t  saigopi123456/tomcat:$BUILD_NUMBER .'
+                sh 'docker build -t  $DOCKER_HUB_REPO:$BUILD_NUMBER .'
             }
         }
         stage ('DockerHub Login') {
@@ -24,12 +29,12 @@ pipeline {
         }
         stage ('Docker Push') {
             steps {
-                sh 'docker push saigopi123456/tomcat:$BUILD_NUMBER'
+                sh 'docker push $DOCKER_HUB_REPO:$BUILD_NUMBER'
             }
         }
         stage ('Docker create container') {
             steps {
-                sh 'docker run -d --name tomcatcont -P --restart always saigopi123456/tomcat:$BUILD_NUMBER'
+                sh 'docker run -d -P --restart always $DOCKER_HUB_REPO:$BUILD_NUMBER'
             }
         }      
     }
