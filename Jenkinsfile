@@ -22,20 +22,11 @@ pipeline {
                 sh 'docker build -t  $DOCKER_HUB_REPO:$BUILD_NUMBER .'
             }
         }
-        stage ('DockerHub Login') {
+        stage ('DockerHub Login and push') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR  --password-stdin'
-            }
-        }
-        stage ('Docker Push') {
-            steps {
                 sh 'docker push $DOCKER_HUB_REPO:$BUILD_NUMBER'
             }
         }
-        stage ('Docker create container') {
-            steps {
-                sh 'docker run -d --name tomcatcon -P --restart always $DOCKER_HUB_REPO:$BUILD_NUMBER'
-            }
-        }      
     }
 }
