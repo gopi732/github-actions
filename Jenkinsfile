@@ -34,7 +34,7 @@ pipeline {
         }
         stage ('Docker create container') {
             steps {
-                sh 'docker run -d -P --restart always $DOCKER_HUB_REPO:$BUILD_NUMBER'
+                sh 'docker run -d --name tomcon -p 9000:8080 --restart always $DOCKER_HUB_REPO:$BUILD_NUMBER'
             }
         }      
     }
