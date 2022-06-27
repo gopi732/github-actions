@@ -24,7 +24,7 @@ pipeline {
         }
         stage ('Container Testing ') {
             steps {
-                sh 'wget localhost:9000'
+                sh 'wget localhost:$BUILD_NUMBER'
             }
         }
         
