@@ -19,7 +19,7 @@ pipeline {
         }
         stage ('create container') {
             steps {
-                sh 'docker run -d --name $CONTAINER_NAME$BUILD_NUMBER -p 9000:8080 --restart unless-stopped $DOCKER_HUB_REPO:$BUILD_NUMBER && docker ps'
+                sh 'docker run -d --name $CONTAINER_NAME$BUILD_NUMBER -p $BUILD_NUMBER:8080 --restart unless-stopped $DOCKER_HUB_REPO:$BUILD_NUMBER && docker ps'
             }
         }
         stage ('Container Testing ') {
@@ -30,7 +30,12 @@ pipeline {
         
         stage ('DockerHub Login and push') {
             steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR  --password-stdin' && 'docker push $DOCKER_HUB_REPO:$BUILD_NUMBER'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR  --password-stdin && docker push $DOCKER_HUB_REPO:$BUILD_NUMBER'
+            }
+        }
+        stage ('Deleting Unused Docker Images') {
+            steps {
+                sh 'docker rmi -f $(docker images -a -q) || true'
             }
         }
     }
