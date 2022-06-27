@@ -17,6 +17,11 @@ pipeline {
                 sh 'docker build -t  $DOCKER_HUB_REPO:$BUILD_NUMBER .'
             }
         }
+        stage ('Stop & Delete Previous Containers') {
+            steps {
+                sh 'docker stop $(docker ps -a -q) || true && docker rm $(docker ps -a -q) || true'       
+            }
+        }
         stage ('create container') {
             steps {
                 sh 'docker run -d --name $CONTAINER_NAME$BUILD_NUMBER -p $BUILD_NUMBER:8080 --restart unless-stopped $DOCKER_HUB_REPO:$BUILD_NUMBER && docker ps'
