@@ -12,14 +12,14 @@ pipeline {
     }
 
     stages {
+        stage ('Stop & Delete Previous Containers & removing unused images') {
+            steps {
+                sh 'docker stop $(docker ps -a -q) || true && docker rm $(docker ps -a -q) || true && docker rmi -f $(docker images -a -q) || true'       
+            }
+        }
         stage ('Docker Image Build') {
             steps {
                 sh 'docker build -t  $DOCKER_HUB_REPO:$BUILD_NUMBER .'
-            }
-        }
-        stage ('Stop & Delete Previous Containers') {
-            steps {
-                sh 'docker stop $(docker ps -a -q) || true && docker rm $(docker ps -a -q) || true'       
             }
         }
         stage ('create container') {
@@ -36,11 +36,6 @@ pipeline {
         stage ('DockerHub Login and push') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR  --password-stdin && docker push $DOCKER_HUB_REPO:$BUILD_NUMBER'
-            }
-        }
-        stage ('Deleting Unused Docker Images') {
-            steps {
-                sh 'docker rmi -f $(docker images -a -q) || true'
             }
         }
     }
