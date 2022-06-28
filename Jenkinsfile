@@ -29,7 +29,7 @@ pipeline {
         }
         stage ('Container Testing ') {
             steps {
-                sh 'wget localhost:$BUILD_NUMBER'
+                sh 'wget localhost:$BUILD_NUMBER/gameoflife/'
             }
         }
         
