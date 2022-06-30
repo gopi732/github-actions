@@ -12,16 +12,16 @@ pipeline {
     }
 
     stages {
-        stage ('Docker Image Build') {
-            steps {
-                sh 'docker build -t  $DOCKER_HUB_REPO:$BUILD_NUMBER .'
-            }
-        }
         stage ('clean up') {
             steps {
                 sh 'docker stop $(docker ps -a -q) || true && docker rm $(docker ps -a -q) || true && docker rmi -f $(docker images -a -q) || true'       
             }
         }
+        stage ('Docker Image Build') {
+            steps {
+                sh 'docker build -t  $DOCKER_HUB_REPO:$BUILD_NUMBER .'
+            }
+        }       
         stage ('create container') {
             steps {
                 sh 'docker run -d --name $CONTAINER_NAME$BUILD_NUMBER -p 9028:8080 --restart unless-stopped $DOCKER_HUB_REPO:$BUILD_NUMBER && docker ps'
