@@ -24,12 +24,12 @@ pipeline {
         }
         stage ('create container') {
             steps {
-                sh 'docker run -d --name $CONTAINER_NAME$BUILD_NUMBER -p 90$BUILD_NUMBER:8080 --restart unless-stopped $DOCKER_HUB_REPO:$BUILD_NUMBER && docker ps'
+                sh 'docker run -d --name $CONTAINER_NAME$BUILD_NUMBER -p 9028:8080 --restart unless-stopped $DOCKER_HUB_REPO:$BUILD_NUMBER && docker ps'
             }
         }
         stage ('Container Testing ') {
             steps {
-                sh 'wget localhost:90$BUILD_NUMBER/gameoflife/'
+                sh 'wget localhost:9028/gameoflife/'
             }
         }
         
