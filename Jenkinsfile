@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_HUB_REPO = "saigopi123456/tomcat"
+        DOCKER_HUB_REPO = "saigopi123456/tomcat-scripted"
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         CONTAINER_NAME = "tomcatcontainer"
         http_proxy = 'http://127.0.0.1:3128/'
