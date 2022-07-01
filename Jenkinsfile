@@ -1,6 +1,5 @@
 pipeline {
     agent any
-    
     environment {
         DOCKER_HUB_REPO = "saigopi123456/tomcat-scripted"
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
@@ -10,7 +9,6 @@ pipeline {
         ftp_proxy = 'http://127.0.0.1:3128/'
         socks_proxy = 'socks://127.0.0.1:3128/'
     }
-
     stages {
         stage ('clean up') {
             steps {
@@ -32,7 +30,6 @@ pipeline {
                 sh 'wget localhost:9028/gameoflife/'
             }
         }
-        
         stage ('DockerHub Login and push') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR  --password-stdin && docker push $DOCKER_HUB_REPO:$BUILD_NUMBER'
