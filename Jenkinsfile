@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'slave'}
+    agent { label 'node'}
     environment {
         DOCKER_HUB_REPO = "saigopi123456/tomcat-scripted"
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
