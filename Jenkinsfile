@@ -27,7 +27,7 @@ pipeline {
         }
         stage ('Container Testing ') {
             steps {
-                sh 'wget localhost:9028/gameoflife/'
+                sh './test.sh'
             }
         }
         stage ('DockerHub Login and push') {
