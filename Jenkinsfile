@@ -27,7 +27,7 @@ pipeline {
         }
         stage ('Container Testing ') {
             steps {
-                sh './test.sh'
+                sh './script.sh'
             }
         }
         stage ('DockerHub Login and push') {
