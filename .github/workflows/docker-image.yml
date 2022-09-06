@@ -16,11 +16,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:latest
-
-  build-the-docker-container:
-    runs-on: ubuntu-latest
-
-    steps:
     - name: create the container
       run: docker run -d --name tomcatcontainer -p 8089:8080 my-image-name:latest
     
