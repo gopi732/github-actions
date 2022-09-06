@@ -17,5 +17,5 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:latest
     - name: create the container
-      run: docker run -d --name tomcatcontainer -p 8089:8080 my-image-name:latest
+      run: docker run -d --name tomcatcontainerr -p 8089:8080 my-image-name:latest
     
